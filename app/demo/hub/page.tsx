@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 import { useState, useEffect } from "react";import Link from "next/link";
 import {
   ArrowLeft, Scale, CheckCircle, Leaf, ArrowRight,
   ClipboardList, BarChart3, Phone, Package,
 } from "lucide-react";
 
-const API = "http://localhost:8000";
+const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 interface Lot {
   id: number;
@@ -115,7 +115,7 @@ export default function HubDashboard() {
       }).then(r => { if (!r.ok) throw new Error(); return r.json(); });
       setSettleResult(data);
       setStep("done");
-      setToast(`✓ M-Pesa sent to ${data.farmer_name} — KES ${data.net_payout.toLocaleString("en-KE")}`);
+      setToast(`âœ“ M-Pesa sent to ${data.farmer_name} â€” KES ${data.net_payout.toLocaleString("en-KE")}`);
     } catch {
       const exportAmt = Math.round(exp * 95 * 100) / 100;
       const oilAmt    = Math.round(oil * 38 * 100) / 100;
@@ -141,7 +141,7 @@ export default function HubDashboard() {
         gross_kg: gross, export_kg: exp, oil_kg: oil, reject_kg: rej,
       });
       setStep("done");
-      setToast(`✓ M-Pesa sent — KES ${net.toLocaleString("en-KE")}`);
+      setToast(`âœ“ M-Pesa sent â€” KES ${net.toLocaleString("en-KE")}`);
     } finally {
       setLoading(false);
     }
@@ -159,7 +159,7 @@ export default function HubDashboard() {
   return (
   <>
     <div className="app-layout">
-      {/* ── SIDEBAR ── */}
+      {/* â”€â”€ SIDEBAR â”€â”€ */}
       <aside className="app-sidebar">
         {/* Logo */}
         <div style={{ padding: "4px 8px 20px", display: "flex", alignItems: "center", gap: 10 }}>
@@ -225,7 +225,7 @@ export default function HubDashboard() {
         </Link>
       </aside>
 
-      {/* ── MAIN ── */}
+      {/* â”€â”€ MAIN â”€â”€ */}
       <main className="app-main">
         <div className="app-topbar">
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -235,12 +235,12 @@ export default function HubDashboard() {
             </span>
           </div>
           <div style={{ fontSize: 12, color: "var(--smoke)" }}>
-            Kisii Highlands Aggregation Hub · W46
+            Kisii Highlands Aggregation Hub Â· W46
           </div>
         </div>
 
         <div className="app-content">
-          {/* ── HISTORY ── */}
+          {/* â”€â”€ HISTORY â”€â”€ */}
           {view === "history" && (
             <div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginBottom: 24 }}>
@@ -283,13 +283,13 @@ export default function HubDashboard() {
             </div>
           )}
 
-          {/* ── QUEUE ── */}
+          {/* â”€â”€ QUEUE â”€â”€ */}
           {view === "queue" && (
             <>
               {step === "queue" && (
                 <div>
                   <h2 style={{ fontSize: 15, fontWeight: 700, color: "var(--ink)", marginBottom: 16 }}>
-                    Incoming Lots — {lots.filter(l => l.status === "incoming").length} waiting
+                    Incoming Lots â€” {lots.filter(l => l.status === "incoming").length} waiting
                   </h2>
                   <div style={{ display: "grid", gap: 8, marginBottom: 28 }}>
                     {lots.filter(l => l.status === "incoming").map(lot => (
@@ -313,7 +313,7 @@ export default function HubDashboard() {
                             <span className="badge badge-blue">INCOMING</span>
                           </div>
                           <div style={{ fontWeight: 600, fontSize: 14, color: "var(--ink)", marginBottom: 2 }}>{lot.farmer_name}</div>
-                          <div style={{ fontSize: 12, color: "var(--smoke)" }}>{lot.ward} · est. {lot.est_tonnes}t</div>
+                          <div style={{ fontSize: 12, color: "var(--smoke)" }}>{lot.ward} Â· est. {lot.est_tonnes}t</div>
                         </div>
                         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
                           <div style={{ textAlign: "right" }}>
@@ -365,7 +365,7 @@ export default function HubDashboard() {
                     <div className="t-label" style={{ color: "rgba(255,255,255,0.35)", marginBottom: 6 }}>Lot on bench</div>
                     <div style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 700, color: "white" }}>{selectedLot.lot_code}</div>
                     <div style={{ fontSize: 13, color: "rgba(255,255,255,0.6)", marginTop: 2 }}>
-                      {selectedLot.farmer_name} · {selectedLot.farmer_phone} · est. {selectedLot.est_tonnes}t
+                      {selectedLot.farmer_name} Â· {selectedLot.farmer_phone} Â· est. {selectedLot.est_tonnes}t
                     </div>
                   </div>
 
@@ -433,7 +433,7 @@ export default function HubDashboard() {
                     </button>
                     <button className="btn btn-primary btn-lg" onClick={doWeighin} disabled={loading}>
                       <Scale size={16} />
-                      {loading ? "Recording…" : "Confirm Weighin"}
+                      {loading ? "Recordingâ€¦" : "Confirm Weighin"}
                     </button>
                   </div>
                 </div>
@@ -447,7 +447,7 @@ export default function HubDashboard() {
                       Weighin Confirmed
                     </h2>
                     <p style={{ fontSize: 13, color: "var(--smoke)", marginBottom: 28 }}>
-                      {selectedLot.lot_code} — {fmt(exp)} kg export · {fmt(oil)} kg oil · {fmt(rej)} kg reject
+                      {selectedLot.lot_code} â€” {fmt(exp)} kg export Â· {fmt(oil)} kg oil Â· {fmt(rej)} kg reject
                     </p>
 
                     <div style={{ padding: "16px 20px", background: "var(--parchment)", borderRadius: "var(--r-md)", marginBottom: 24, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -473,7 +473,7 @@ export default function HubDashboard() {
                       style={{ width: "100%", height: 52, fontSize: 15, fontWeight: 800, justifyContent: "center" }}
                     >
                       {loading
-                        ? "Sending M-Pesa…"
+                        ? "Sending M-Pesaâ€¦"
                         : <><CheckCircle size={20} /> Trigger M-Pesa Payout</>}
                     </button>
                   </div>
@@ -491,7 +491,7 @@ export default function HubDashboard() {
                         KES {fmt(settleResult.net_payout)}
                       </div>
                       <div style={{ fontSize: 14, color: "rgba(255,255,255,0.7)", margin: "10px 0 20px" }}>
-                        Sent to {settleResult.farmer_name} · {settleResult.farmer_phone}
+                        Sent to {settleResult.farmer_name} Â· {settleResult.farmer_phone}
                       </div>
                       <div style={{ display: "inline-block", padding: "10px 20px", background: "rgba(255,255,255,0.15)", borderRadius: "var(--r-md)", backdropFilter: "blur(4px)" }}>
                         <div className="t-label" style={{ color: "rgba(255,255,255,0.55)", marginBottom: 4 }}>M-Pesa Transaction ID</div>
@@ -505,7 +505,7 @@ export default function HubDashboard() {
                   {/* Line items */}
                   <div className="card" style={{ overflow: "hidden", marginBottom: 20 }}>
                     <div style={{ padding: "14px 20px", borderBottom: "1px solid var(--rule)" }}>
-                      <span className="t-label" style={{ color: "var(--mist)" }}>Settlement Statement — {settleResult.lot_code}</span>
+                      <span className="t-label" style={{ color: "var(--mist)" }}>Settlement Statement â€” {settleResult.lot_code}</span>
                     </div>
                     <table className="data-table">
                       <tbody>
@@ -513,7 +513,7 @@ export default function HubDashboard() {
                           <tr key={i}>
                             <td style={{ color: "var(--ink)" }}>{item.description}</td>
                             <td style={{ textAlign: "right", fontFamily: "Georgia, serif", fontSize: 14, fontWeight: 700, color: item.type === "credit" ? "var(--success-fg)" : "var(--danger-fg)" }}>
-                              {item.type === "deduction" ? "−" : "+"}KES {fmt(Math.abs(item.amount))}
+                              {item.type === "deduction" ? "âˆ’" : "+"}KES {fmt(Math.abs(item.amount))}
                             </td>
                           </tr>
                         ))}
@@ -548,3 +548,4 @@ export default function HubDashboard() {
   </>
   );
 }
+

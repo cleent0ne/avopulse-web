@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
@@ -6,7 +6,7 @@ import {
   TrendingUp, Package, X,
 } from "lucide-react";
 
-const API = "http://localhost:8000";
+const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 const WARD_DATA = [
   { ward: "Nyaribari Chache", verified: 13.2, hold: 4.8, pct: 73, orchards: 5, cleared: 3 },
@@ -75,7 +75,7 @@ export default function ExporterDashboard() {
 
   return (
     <div className="app-layout">
-      {/* ── SIDEBAR ── */}
+      {/* â”€â”€ SIDEBAR â”€â”€ */}
       <aside className="app-sidebar">
         {/* Logo */}
         <div style={{ padding: "4px 8px 20px", display: "flex", alignItems: "center", gap: 10 }}>
@@ -134,13 +134,13 @@ export default function ExporterDashboard() {
         </Link>
       </aside>
 
-      {/* ── MAIN ── */}
+      {/* â”€â”€ MAIN â”€â”€ */}
       <main className="app-main">
         <div className="app-topbar">
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <BarChart3 size={18} color="var(--canopy)" />
             <span style={{ fontWeight: 700, fontSize: 15, color: "var(--ink)" }}>Supply Dashboard</span>
-            <span className="badge badge-blue">{week} · Kisii Highlands · Hass</span>
+            <span className="badge badge-blue">{week} Â· Kisii Highlands Â· Hass</span>
           </div>
           <button className="btn btn-primary" onClick={() => setShowBook(true)}>
             <Plus size={15} /> Add Booking
@@ -200,7 +200,7 @@ export default function ExporterDashboard() {
           <div className="card" style={{ overflow: "hidden", marginBottom: 20 }}>
             <div style={{ padding: "14px 20px", borderBottom: "1px solid var(--rule)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <span style={{ fontWeight: 700, fontSize: 15, color: "var(--ink)" }}>Verified Supply by Ward</span>
-              <span className="badge badge-green">{supply.total_verified_mature_tonnes}t cleared · {week}</span>
+              <span className="badge badge-green">{supply.total_verified_mature_tonnes}t cleared Â· {week}</span>
             </div>
             {WARD_DATA.map(w => (
               <div
@@ -211,7 +211,7 @@ export default function ExporterDashboard() {
                   <div>
                     <span style={{ fontWeight: 700, fontSize: 14, color: "var(--ink)" }}>{w.ward}</span>
                     <span style={{ fontSize: 12, color: "var(--smoke)", marginLeft: 10 }}>
-                      {w.orchards} orchards · {w.cleared} cleared
+                      {w.orchards} orchards Â· {w.cleared} cleared
                     </span>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
@@ -242,7 +242,7 @@ export default function ExporterDashboard() {
           {/* Forward bookings */}
           <div className="card" style={{ overflow: "hidden" }}>
             <div style={{ padding: "14px 20px", borderBottom: "1px solid var(--rule)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontWeight: 700, fontSize: 15, color: "var(--ink)" }}>Forward Bookings — {week}</span>
+              <span style={{ fontWeight: 700, fontSize: 15, color: "var(--ink)" }}>Forward Bookings â€” {week}</span>
               <CoveragePill pct={coveragePct} />
             </div>
             <table className="data-table">
@@ -281,7 +281,7 @@ export default function ExporterDashboard() {
         </div>
       </main>
 
-      {/* ── BOOKING MODAL ── */}
+      {/* â”€â”€ BOOKING MODAL â”€â”€ */}
       {showBook && (
         <div
           style={{ position: "fixed", inset: 0, background: "rgba(15,31,16,0.6)", backdropFilter: "blur(4px)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 999 }}
@@ -299,7 +299,7 @@ export default function ExporterDashboard() {
 
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20, padding: "10px 14px", background: "var(--parchment)", borderRadius: "var(--r-sm)" }}>
               <div style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--success-dot)" }} />
-              <span style={{ fontSize: 13, color: "var(--smoke)" }}>Week {week} · {supply.total_verified_mature_tonnes}t available</span>
+              <span style={{ fontSize: 13, color: "var(--smoke)" }}>Week {week} Â· {supply.total_verified_mature_tonnes}t available</span>
             </div>
 
             {[
@@ -338,3 +338,4 @@ export default function ExporterDashboard() {
     </div>
   );
 }
+

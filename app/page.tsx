@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
@@ -124,15 +124,18 @@ export default function HomePage() {
         display: "flex",
         flexDirection: "column",
       }}>
-        {/* Full-bleed hero background image */}
-        <Image
-          src="/img/hero-bg.jpg"
-          alt="Kisii avocado orchard with ripe Hass fruit"
-          fill
-          priority
-          sizes="100vw"
-          style={{ objectFit: "cover", objectPosition: "center 30%" }}
-        />
+        {/* Full-bleed hero background image with cinematic drift */}
+        <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
+          <Image
+            src="/img/hero-bg.jpg"
+            alt="Kisii avocado orchard with ripe Hass fruit"
+            fill
+            priority
+            sizes="100vw"
+            className="anim-hero-drift"
+            style={{ objectFit: "cover", objectPosition: "center 30%" }}
+          />
+        </div>
 
         {/* Dark gradient overlay */}
         <div style={{
@@ -227,18 +230,24 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right: image with organic frame */}
+            {/* Right: image with organic frame and interactive scan-line HUD */}
             <div className="anim-fade-up" style={{ position: "relative" }}>
               <div style={{ borderRadius: "24px", overflow: "hidden", aspectRatio: "4/4", position: "relative" }}>
                 <Image src="/img/avocado-cut.jpg" alt="AI maturity assessment" fill style={{ objectFit: "cover" }} sizes="(max-width: 768px) 100vw, 500px" />
+                {/* MotionSites Laser Scan Wipe Line */}
+                <div className="anim-scan-line" />
               </div>
               <div style={{
                 position: "absolute", bottom: "16px", left: "16px",
                 background: "var(--forest)", color: "white",
                 borderRadius: 12, padding: "16px 20px",
+                display: "flex", alignItems: "center", gap: 12,
               }}>
-                <div style={{ fontSize: 15, fontWeight: 700, color: "var(--lime)" }}>Likely ≥ 23% Mature</div>
-                <div style={{ fontSize: 13, color: "rgba(255,255,255,0.75)", marginTop: 2 }}>94% model confidence</div>
+                <div style={{ width: 10, height: 10, borderRadius: "50%", background: "var(--lime)" }} className="anim-pulse" />
+                <div>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: "var(--lime)" }}>Likely ≥ 23% Mature</div>
+                  <div style={{ fontSize: 13, color: "rgba(255,255,255,0.75)", marginTop: 2 }}>94% model confidence · Live scan</div>
+                </div>
               </div>
             </div>
           </div>

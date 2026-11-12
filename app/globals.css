@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 /* =============================================
    AVOPULSE — PRODUCTION DESIGN SYSTEM
@@ -460,11 +460,11 @@ textarea.input { height: auto; padding: 10px 14px; resize: vertical; }
   display: flex; align-items: center; justify-content: center;
 }
 
-/* ─── ENTRANCE ANIMATIONS ─── */
+/* ─── ENTRANCE & MOTIONSITES INTERACTION ANIMATIONS ─── */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
@@ -472,12 +472,61 @@ textarea.input { height: auto; padding: 10px 14px; resize: vertical; }
   }
 }
 
+@keyframes heroDrift {
+  0% { transform: scale(1) translate3d(0, 0, 0); }
+  50% { transform: scale(1.05) translate3d(-10px, -6px, 0); }
+  100% { transform: scale(1) translate3d(0, 0, 0); }
+}
+
+@keyframes scanWipe {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    top: 98%;
+    opacity: 0;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+.anim-hero-drift {
+  animation: heroDrift 24s ease-in-out infinite;
+  will-change: transform;
+}
+
+.anim-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--lime) 50%, transparent 100%);
+  box-shadow: 0 0 14px var(--lime), 0 0 24px rgba(124,191,94,0.6);
+  animation: scanWipe 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.anim-pulse {
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
 .anim-fade-up {
   animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .anim-fade-up {
+  .anim-fade-up, .anim-hero-drift, .anim-scan-line, .anim-pulse {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

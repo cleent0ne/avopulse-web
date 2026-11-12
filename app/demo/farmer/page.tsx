@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
@@ -6,7 +6,7 @@ import {
   CreditCard, BookOpen, Award, ArrowRight,
 } from "lucide-react";
 
-const API = "http://localhost:8000";
+const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 interface LedgerEntry {
   id: number;
@@ -49,11 +49,11 @@ const MOCK_LEDGER: FarmerLedger = {
   total_kg_settled: 12400,
   total_net_paid_kes: 1098470,
   credit_readiness: {
-    tier: "Tier 1 — Prime Commercial",
+    tier: "Tier 1 â€” Prime Commercial",
     score: 815,
     max_score: 900,
     eligible_limit_kes: 150000,
-    badge: "AFA Verified — Eligible for input credit",
+    badge: "AFA Verified â€” Eligible for input credit",
     illustrative_note: "Rules-based calculation over verifiable delivery ledger.",
     qualification_factors: [
       "5 consecutive verified harvests logged over 6 months",
@@ -97,7 +97,7 @@ export default function FarmerDashboard() {
 
   return (
     <div className="app-layout">
-      {/* ── SIDEBAR ── */}
+      {/* â”€â”€ SIDEBAR â”€â”€ */}
       <aside className="app-sidebar">
         {/* Logo */}
         <div style={{ padding: "4px 8px 20px", display: "flex", alignItems: "center", gap: 10 }}>
@@ -115,7 +115,7 @@ export default function FarmerDashboard() {
             <div style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--canopy)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 13, color: "white", flexShrink: 0 }}>JM</div>
             <div>
               <div style={{ fontWeight: 700, fontSize: 13, color: "white" }}>Jared Mogaka</div>
-              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.45)", marginTop: 1 }}>Farmer · Kisii</div>
+              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.45)", marginTop: 1 }}>Farmer Â· Kisii</div>
             </div>
           </div>
           <div style={{ paddingTop: 10, borderTop: "1px solid rgba(255,255,255,0.08)" }}>
@@ -156,7 +156,7 @@ export default function FarmerDashboard() {
         </Link>
       </aside>
 
-      {/* ── MAIN ── */}
+      {/* â”€â”€ MAIN â”€â”€ */}
       <main className="app-main">
         <div className="app-topbar">
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -166,12 +166,12 @@ export default function FarmerDashboard() {
             </span>
           </div>
           <span style={{ fontSize: 12, color: "var(--smoke)" }}>
-            {ledger.group_name} · {ledger.ward}
+            {ledger.group_name} Â· {ledger.ward}
           </span>
         </div>
 
         <div className="app-content">
-          {/* ── STATEMENT TAB ── */}
+          {/* â”€â”€ STATEMENT TAB â”€â”€ */}
           {tab === "statement" && latestEntry && (
             <div>
               {/* M-Pesa receipt */}
@@ -202,14 +202,14 @@ export default function FarmerDashboard() {
                   <tbody>
                     {[
                       { label: "Total gross weight",    val: `${fmt(latestEntry.kg_settled)} kg`,                                                       credit: true },
-                      { label: "Export grade (84–87%)", val: `KES ${fmt(Math.round(latestEntry.kg_settled * 0.86 * 95))}`,                              credit: true },
-                      { label: "Oil grade (10–13%)",    val: `KES ${fmt(Math.round(latestEntry.kg_settled * 0.10 * 38))}`,                              credit: true },
-                      { label: "Transport deduction",   val: `− KES ${fmt(Math.round(latestEntry.kg_settled * 4.5))}`,                                  credit: false },
-                      { label: "AvoPulse grading fee",  val: `− KES ${fmt(Math.round(latestEntry.kg_settled * 3))}`,                                    credit: false },
+                      { label: "Export grade (84â€“87%)", val: `KES ${fmt(Math.round(latestEntry.kg_settled * 0.86 * 95))}`,                              credit: true },
+                      { label: "Oil grade (10â€“13%)",    val: `KES ${fmt(Math.round(latestEntry.kg_settled * 0.10 * 38))}`,                              credit: true },
+                      { label: "Transport deduction",   val: `âˆ’ KES ${fmt(Math.round(latestEntry.kg_settled * 4.5))}`,                                  credit: false },
+                      { label: "AvoPulse grading fee",  val: `âˆ’ KES ${fmt(Math.round(latestEntry.kg_settled * 3))}`,                                    credit: false },
                     ].map(row => (
                       <tr key={row.label}>
                         <td style={{ color: "var(--smoke)" }}>{row.label}</td>
-                        <td style={{ textAlign: "right", fontWeight: 700, color: row.val.includes("−") ? "var(--danger-fg)" : "var(--ink)" }}>
+                        <td style={{ textAlign: "right", fontWeight: 700, color: row.val.includes("âˆ’") ? "var(--danger-fg)" : "var(--ink)" }}>
                           {row.val}
                         </td>
                       </tr>
@@ -232,7 +232,7 @@ export default function FarmerDashboard() {
             </div>
           )}
 
-          {/* ── LEDGER TAB ── */}
+          {/* â”€â”€ LEDGER TAB â”€â”€ */}
           {tab === "ledger" && (
             <div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 24 }}>
@@ -294,7 +294,7 @@ export default function FarmerDashboard() {
             </div>
           )}
 
-          {/* ── CREDIT TAB ── */}
+          {/* â”€â”€ CREDIT TAB â”€â”€ */}
           {tab === "credit" && (
             <div>
               {/* Score hero */}
@@ -375,3 +375,4 @@ export default function FarmerDashboard() {
     </div>
   );
 }
+

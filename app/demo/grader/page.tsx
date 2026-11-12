@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,7 +8,7 @@ import {
   MapPin, Trees, CalendarDays, ChevronRight,
 } from "lucide-react";
 
-const API = "http://localhost:8000";
+const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 const ORCHARDS = [
   { id: 1,  farmer: "Jared Mogaka",       ward: "Nyaribari Chache",  trees: 120, days: 175, est: 4.8 },
@@ -40,7 +40,7 @@ interface SignoffResult {
 
 function BandPill({ band }: { band: Band }) {
   const cfg = {
-    "likely at or above 23%": { cls: "badge badge-green", label: "Likely ≥ 23% — Mature" },
+    "likely at or above 23%": { cls: "badge badge-green", label: "Likely â‰¥ 23% â€” Mature" },
     "borderline":             { cls: "badge badge-amber", label: "Borderline" },
     "below target":           { cls: "badge badge-red",   label: "Below Target" },
   }[band];
@@ -145,14 +145,14 @@ export default function GraderDashboard() {
       }).then(r => r.json());
       setSignoffResult(data);
       setStep("done");
-      setToast(dec === "harvest" ? "✓ Lot cleared for harvest — lot code issued" : "⚑ Orchard placed on hold");
+      setToast(dec === "harvest" ? "âœ“ Lot cleared for harvest â€” lot code issued" : "âš‘ Orchard placed on hold");
     } catch {
       setSignoffResult({
         message: `Orchard ${selectedOrchard.id} signed off as ${dec.toUpperCase()}`,
         lot: dec === "harvest" ? { lot_code: `LOT-KIS-${Date.now().toString().slice(-6)}` } : undefined,
       });
       setStep("done");
-      setToast(dec === "harvest" ? "✓ Lot cleared for harvest — lot code issued" : "⚑ Orchard placed on hold");
+      setToast(dec === "harvest" ? "âœ“ Lot cleared for harvest â€” lot code issued" : "âš‘ Orchard placed on hold");
     } finally {
       setLoading(false);
     }
@@ -173,7 +173,7 @@ export default function GraderDashboard() {
   return (
   <>
     <div className="app-layout">
-      {/* ── SIDEBAR ── */}
+      {/* â”€â”€ SIDEBAR â”€â”€ */}
       <aside className="app-sidebar">
         {/* Logo */}
         <div style={{ padding: "4px 8px 20px", display: "flex", alignItems: "center", gap: 10 }}>
@@ -229,7 +229,7 @@ export default function GraderDashboard() {
         </Link>
       </aside>
 
-      {/* ── MAIN ── */}
+      {/* â”€â”€ MAIN â”€â”€ */}
       <main className="app-main">
         {/* Top bar */}
         <div className="app-topbar">
@@ -275,11 +275,11 @@ export default function GraderDashboard() {
         </div>
 
         <div className="app-content">
-          {/* ── HISTORY VIEW ── */}
+          {/* â”€â”€ HISTORY VIEW â”€â”€ */}
           {view === "history" && (
             <div>
               <div style={{ marginBottom: 20 }}>
-                <span className="badge badge-blue">Today — Nov 12, 2026</span>
+                <span className="badge badge-blue">Today â€” Nov 12, 2026</span>
               </div>
               <div className="card" style={{ overflow: "hidden" }}>
                 <table className="data-table">
@@ -324,7 +324,7 @@ export default function GraderDashboard() {
             </div>
           )}
 
-          {/* ── ASSESSMENT FLOW ── */}
+          {/* â”€â”€ ASSESSMENT FLOW â”€â”€ */}
           {view === "queue" && (
             <>
               {/* STEP 1: SELECT */}
@@ -403,10 +403,10 @@ export default function GraderDashboard() {
                     <div>
                       <div className="t-label" style={{ color: "var(--mist)", marginBottom: 3 }}>Selected orchard</div>
                       <div style={{ fontWeight: 700, fontSize: 15, color: "var(--ink)" }}>
-                        {selectedOrchard.farmer} — {selectedOrchard.ward}
+                        {selectedOrchard.farmer} â€” {selectedOrchard.ward}
                       </div>
                       <div style={{ fontSize: 12, color: "var(--smoke)", marginTop: 2 }}>
-                        {selectedOrchard.trees} trees · <strong>{selectedOrchard.days} days</strong> since flowering
+                        {selectedOrchard.trees} trees Â· <strong>{selectedOrchard.days} days</strong> since flowering
                       </div>
                     </div>
                     <div style={{ textAlign: "right" }}>
@@ -435,10 +435,10 @@ export default function GraderDashboard() {
                       <Upload size={24} color="var(--canopy)" />
                     </div>
                     <div style={{ fontWeight: 700, fontSize: 15, color: "var(--ink)", marginBottom: 6 }}>
-                      {dragOver ? "Drop to upload" : "Upload 1–2 cut fruit photos"}
+                      {dragOver ? "Drop to upload" : "Upload 1â€“2 cut fruit photos"}
                     </div>
                     <div style={{ fontSize: 13, color: "var(--smoke)" }}>
-                      Drag & drop or click to browse · Photograph cross-section in natural light
+                      Drag & drop or click to browse Â· Photograph cross-section in natural light
                     </div>
                     <input ref={fileRef} type="file" accept="image/*" multiple style={{ display: "none" }} onChange={e => handleFiles(e.target.files)} />
                   </div>
@@ -469,8 +469,8 @@ export default function GraderDashboard() {
                     <button className="btn btn-primary btn-lg" onClick={runAssessment} disabled={loading}>
                       {loading
                         ? (aiStatus === "uploading"
-                            ? <><span className="spinner spinner-sm" />Uploading…</>
-                            : <><span className="spinner spinner-sm" />Gemini is analysing…</>)
+                            ? <><span className="spinner spinner-sm" />Uploadingâ€¦</>
+                            : <><span className="spinner spinner-sm" />Gemini is analysingâ€¦</>)
                         : <><Camera size={16} /> Run AI Assessment</>}
                     </button>
                   </div>
@@ -511,9 +511,9 @@ export default function GraderDashboard() {
                       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
                         {[
                           { label: "Days since flowering", val: `${result.days_since_flowering}d` },
-                          { label: "Seed coat", val: result.seed_coat_color || "—" },
-                          { label: "Flesh score", val: result.visual_score ? `${Math.round(result.visual_score * 100)}%` : "—" },
-                          { label: "AI source", val: result.source === "gemini" ? "Gemini AI ✦" : result.source === "live" ? "Claude AI" : "Cached" },
+                          { label: "Seed coat", val: result.seed_coat_color || "â€”" },
+                          { label: "Flesh score", val: result.visual_score ? `${Math.round(result.visual_score * 100)}%` : "â€”" },
+                          { label: "AI source", val: result.source === "gemini" ? "Gemini AI âœ¦" : result.source === "live" ? "Claude AI" : "Cached" },
                         ].map(d => (
                           <div key={d.label} style={{ padding: "10px 12px", background: "var(--parchment)", borderRadius: "var(--r-sm)" }}>
                             <div className="t-label" style={{ color: "var(--mist)", marginBottom: 4 }}>{d.label}</div>
@@ -559,7 +559,7 @@ export default function GraderDashboard() {
                       className="input"
                       value={note}
                       onChange={e => setNote(e.target.value)}
-                      placeholder="e.g. Field inspection confirms advanced ripening on south-facing trees…"
+                      placeholder="e.g. Field inspection confirms advanced ripening on south-facing treesâ€¦"
                       rows={2}
                     />
                   </div>
@@ -573,7 +573,7 @@ export default function GraderDashboard() {
                       style={{ flex: 1, justifyContent: "center" }}
                     >
                       <CheckCircle size={18} />
-                      {loading && decision === "harvest" ? "Processing…" : "Sign off — HARVEST"}
+                      {loading && decision === "harvest" ? "Processingâ€¦" : "Sign off â€” HARVEST"}
                     </button>
                     <button
                       className="btn btn-danger btn-lg"
@@ -582,7 +582,7 @@ export default function GraderDashboard() {
                       style={{ flex: 1, justifyContent: "center", background: "transparent", color: "var(--danger-fg)", border: "2px solid var(--danger-dot)" }}
                     >
                       <XCircle size={18} />
-                      {loading && decision === "hold" ? "Processing…" : "Place on HOLD"}
+                      {loading && decision === "hold" ? "Processingâ€¦" : "Place on HOLD"}
                     </button>
                   </div>
                 </div>
@@ -614,7 +614,7 @@ export default function GraderDashboard() {
                         <div style={{ fontFamily: "Georgia, serif", fontSize: 24, fontWeight: 700, color: "var(--gold)", letterSpacing: "0.02em" }}>
                           {signoffResult.lot.lot_code}
                         </div>
-                        <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 4 }}>→ Queued at hub weighbridge</div>
+                        <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 4 }}>â†’ Queued at hub weighbridge</div>
                       </div>
                     )}
 
@@ -642,3 +642,4 @@ export default function GraderDashboard() {
   </>
   );
 }
+
