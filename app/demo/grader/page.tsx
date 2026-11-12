@@ -8,7 +8,7 @@ import {
   MapPin, Trees, CalendarDays, ChevronRight,
 } from "lucide-react";
 
-const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API = process.env.NEXT_PUBLIC_API_URL || "https://api-production-314d18af.up.railway.app";
 
 const ORCHARDS = [
   { id: 1,  farmer: "Jared Mogaka",       ward: "Nyaribari Chache",  trees: 120, days: 175, est: 4.8 },
@@ -642,4 +642,5 @@ export default function GraderDashboard() {
   </>
   );
 }
+
 

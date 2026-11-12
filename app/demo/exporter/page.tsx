@@ -6,7 +6,7 @@ import {
   TrendingUp, Package, X,
 } from "lucide-react";
 
-const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API = process.env.NEXT_PUBLIC_API_URL || "https://api-production-314d18af.up.railway.app";
 
 const WARD_DATA = [
   { ward: "Nyaribari Chache", verified: 13.2, hold: 4.8, pct: 73, orchards: 5, cleared: 3 },
@@ -338,4 +338,5 @@ export default function ExporterDashboard() {
     </div>
   );
 }
+
 

@@ -5,7 +5,7 @@ import {
   ClipboardList, BarChart3, Phone, Package,
 } from "lucide-react";
 
-const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API = process.env.NEXT_PUBLIC_API_URL || "https://api-production-314d18af.up.railway.app";
 
 interface Lot {
   id: number;
@@ -548,4 +548,5 @@ export default function HubDashboard() {
   </>
   );
 }
+
 

@@ -6,7 +6,7 @@ import {
   CreditCard, BookOpen, Award, ArrowRight,
 } from "lucide-react";
 
-const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API = process.env.NEXT_PUBLIC_API_URL || "https://api-production-314d18af.up.railway.app";
 
 interface LedgerEntry {
   id: number;
@@ -375,4 +375,5 @@ export default function FarmerDashboard() {
     </div>
   );
 }
+
 
